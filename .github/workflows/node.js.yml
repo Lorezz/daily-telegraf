@@ -5,7 +5,7 @@ name: Daily Telegraf
 
 on:
   schedule:
-    - cron: "0 17 * * *"
+    - cron: '20 17 * * *'
   workflow_dispatch:
 
 env:
@@ -14,7 +14,7 @@ env:
   CHAT_ID: ${{ secrets.CHAT_ID }}
   VIDEO_PARAMS: ${{ secrets.VIDEO_PARAMS }}
   PIC_PARAMS: ${{ secrets.PIC_PARAMS }}
-  
+
 jobs:
   spam:
     runs-on: ubuntu-latest
@@ -22,10 +22,10 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: yarn install --frozen--
-    - run: node src/main.js
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install --frozen--
+      - run: node src/main.js
