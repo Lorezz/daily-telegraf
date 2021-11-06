@@ -2,6 +2,8 @@ require('dotenv').config();
 const _ = require('lodash');
 const axios = require('axios');
 const { Telegraf } = require('telegraf');
+const getVideoGifs = require('./gifs');
+
 const CHAT_ID = process.env.CHAT_ID;
 const videoParams = process.env.VIDEO_PARAMS.split('|');
 const picParams = process.env.PIC_PARAMS.split('|');
@@ -65,12 +67,17 @@ async function getGif() {
 (async () => {
   const bot = new Telegraf(process.env.BOT_KEY);
 
-  const gif = await getGif();
-  await bot.telegram.sendAnimation(CHAT_ID, gif);
+  // const gif = await getGif();
+  // await bot.telegram.sendAnimation(CHAT_ID, gif);
 
   const video = await getVideo(...videoParams);
   if (video?.length) {
-    await bot.telegram.sendVideo(CHAT_ID, video[0]);
+    try {
+      await bot.telegram.sendVideo(CHAT_ID, video[0]);
+    } catch (e) {
+      const gifs = await getVideoGifs();
+      await bot.telegram.sendVideo(CHAT_ID, gifs[0]);
+    }
   }
 
   let pic = await getPic(...picParams);
