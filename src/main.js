@@ -70,16 +70,6 @@ async function getGif() {
   // const gif = await getGif();
   // await bot.telegram.sendAnimation(CHAT_ID, gif);
 
-  const video = await getVideo(...videoParams);
-  if (video?.length) {
-    try {
-      await bot.telegram.sendVideo(CHAT_ID, video[0]);
-    } catch (e) {
-      const gifs = await getVideoGifs();
-      await bot.telegram.sendVideo(CHAT_ID, gifs[0]);
-    }
-  }
-
   let pic = await getPic(...picParams);
   if (pic?.length) {
     let pic2 = null;
@@ -97,5 +87,21 @@ async function getGif() {
     } else if (pic1) {
       await bot.telegram.sendPhoto(CHAT_ID, pic);
     }
+  }
+
+  try {
+    const video = await getVideo(...videoParams);
+    if (video?.length) {
+      await bot.telegram.sendVideo(CHAT_ID, video[0]);
+      // console.log(video[0]);
+    }
+  } catch (e) {
+    try {
+      const gifs = await getVideoGifs();
+      if (gifs.length > 0) {
+        await bot.telegram.sendVideo(CHAT_ID, gifs[0]);
+        // console.log(gifs[0]);
+      }
+    } catch (error) {}
   }
 })();

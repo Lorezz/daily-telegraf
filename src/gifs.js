@@ -25,8 +25,8 @@ async function getVideoGifs() {
 
   if (!urls) return null;
 
-  console.log(urls.slice(0, 5));
-  return urls.slice(0, 5);
+  console.log(urls.slice(0, 3));
+  return urls.slice(0, 3);
 }
 
 module.exports = getVideoGifs;
