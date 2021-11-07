@@ -17,6 +17,7 @@ env:
   CHAT_ID: ${{ secrets.CHAT_ID }}
   VIDEO_PARAMS: ${{ secrets.VIDEO_PARAMS }}
   PIC_PARAMS: ${{ secrets.PIC_PARAMS }}
+  GIFS: ${{ secrets.GIFS }}
 
 jobs:
   spam:
